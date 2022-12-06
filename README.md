@@ -1,9 +1,6 @@
 # JavaSpring
 ProjectForTest
 
-Crie um repositório público no github com a API e os exercícios para serem avaliados, 
-em seguida encaminhe o link do repositório para o e-mail vagas@evolutionsoft.com.br com o 
-assunto "Teste Desenvolvedor Java Spring Boot".
 1. O teste de API consiste em criar um CRUD das entidades abaixo:
 Entidade Pessoa
 - Id *
