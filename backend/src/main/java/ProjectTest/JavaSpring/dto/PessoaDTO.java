@@ -3,8 +3,7 @@ package ProjectTest.JavaSpring.dto;
 import ProjectTest.JavaSpring.entities.Contato;
 import ProjectTest.JavaSpring.entities.Pessoa;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.util.List;
 
 public class PessoaDTO {
@@ -12,14 +11,16 @@ public class PessoaDTO {
 
 
     private Long id;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Não pode estar em branco")
+    @NotEmpty(message = "Não pode estar vazio")
     private String name;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Não pode estar em branco")
+    @NotEmpty(message = "Não pode estar vazio")
+    @Size(min = 11, max = 11, message = "CPF Obrigado 11 Digitos")
     private String CPF;
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Não pode estar em branco")
+    @NotEmpty(message = "Não pode estar vazio")
+    @Email
     private String email;
     private Long CEP;
     private String logradouro;

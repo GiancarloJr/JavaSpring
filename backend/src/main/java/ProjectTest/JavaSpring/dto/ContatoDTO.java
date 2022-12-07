@@ -1,13 +1,25 @@
 package ProjectTest.JavaSpring.dto;
 
 import ProjectTest.JavaSpring.entities.Contato;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class ContatoDTO {
 
     private Long id;
+    @Size(min = 3, max = 60, message = "Campo Nome Obrigatório")
+    @NotEmpty
+    @NotBlank
     private String nome;
+    @NumberFormat
     private Long telefone;
+    @NumberFormat
     private Long celular;
+    @Email(message = "Email de usuario para adicionar contato obrigatório")
     private String emailPessoa;
 
     public ContatoDTO(){
