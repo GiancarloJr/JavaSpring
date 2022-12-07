@@ -3,7 +3,7 @@ package ProjectTest.JavaSpring.services;
 import ProjectTest.JavaSpring.dto.PessoaDTO;
 import ProjectTest.JavaSpring.entities.Pessoa;
 import ProjectTest.JavaSpring.repositories.PessoaRepository;
-import ProjectTest.JavaSpring.services.exceptions.NotFoundException;
+import ProjectTest.JavaSpring.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +22,16 @@ public class PessoaService {
         try {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             return new PessoaDTO(entity.get());
-        } catch (NotFoundException e){
-            throw new NotFoundException("Pessoa não encontrada");
+        } catch (NoSuchElementException e){
+            throw new ObjectNotFoundException("Pessoa nao encontrada");
         }
-
     }
 
     public List<PessoaDTO> findAll() {
         List<Pessoa> list = pessoaRepository.findAll();
+        for(Pessoa pessoa: list){
+            pessoa.getContatos().clear();
+        }
         return list.stream().map(x -> new PessoaDTO(x)).collect(Collectors.toList());
     }
 
@@ -45,7 +47,7 @@ public class PessoaService {
             convertDTOtoEntity(entity.get(), pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity.get()));
         } catch (NoSuchElementException e){
-            throw new NotFoundException("Pessoa não encontrada");
+            throw new ObjectNotFoundException("Pessoa não encontrada");
         }
     }
 
