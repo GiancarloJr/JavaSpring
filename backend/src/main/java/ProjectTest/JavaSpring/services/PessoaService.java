@@ -3,8 +3,10 @@ package ProjectTest.JavaSpring.services;
 import ProjectTest.JavaSpring.dto.PessoaDTO;
 import ProjectTest.JavaSpring.entities.Pessoa;
 import ProjectTest.JavaSpring.repositories.PessoaRepository;
+import ProjectTest.JavaSpring.services.exceptions.DataBaseException;
 import ProjectTest.JavaSpring.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class PessoaService {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             return new PessoaDTO(entity.get());
         } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Pessoa nao encontrada");
+            throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
         }
     }
 
@@ -37,7 +39,7 @@ public class PessoaService {
 
     public PessoaDTO insert(PessoaDTO pessoaDTO) {
             Pessoa entity = new Pessoa();
-            convertDTOtoEntity(entity,pessoaDTO);
+            convertDTOtoEntity(entity, pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity));
     }
 
@@ -47,7 +49,7 @@ public class PessoaService {
             convertDTOtoEntity(entity.get(), pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity.get()));
         } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Pessoa não encontrada");
+            throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
         }
     }
 
@@ -60,5 +62,13 @@ public class PessoaService {
         entity.setLogradouro(pessoaDTO.getLogradouro());
         entity.setEmail(pessoaDTO.getEmail());
         entity.setUF(pessoaDTO.getUF());
+    }
+
+    public void deletarPessoa(Long id){
+        try {
+            pessoaRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
+        }
     }
 }

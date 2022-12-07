@@ -6,6 +6,7 @@ import ProjectTest.JavaSpring.repositories.ContatoRepository;
 import ProjectTest.JavaSpring.repositories.PessoaRepository;
 import ProjectTest.JavaSpring.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +28,8 @@ public class ContatoService {
             Optional<Contato> entity = contatoRepository.findById(id);
             return new ContatoDTO(entity.get());
         } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Contato não encontrada");
+            throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
         }
-
     }
 
     public List<ContatoDTO> findAll() {
@@ -38,10 +38,14 @@ public class ContatoService {
     }
 
     public ContatoDTO insert(ContatoDTO ContatoDTO) {
-        Contato entity = new Contato();
-        convertDTOtoEntity(entity,ContatoDTO);
-        entity.getPessoa().getContatos().clear();
-        return new ContatoDTO(contatoRepository.save(entity));
+        try {
+            Contato entity = new Contato();
+            convertDTOtoEntity(entity, ContatoDTO);
+            entity.getPessoa().getContatos().clear();
+            return new ContatoDTO(contatoRepository.save(entity));
+        } catch (NullPointerException e) {
+            throw new ObjectNotFoundException("EMAIL DE USUARIO INEXISTENTE");
+        }
     }
 
     public ContatoDTO update(Long id,ContatoDTO ContatoDTO) {
@@ -49,8 +53,8 @@ public class ContatoService {
             Optional<Contato> entity = contatoRepository.findById(id);
             convertDTOtoEntity(entity.get(), ContatoDTO);
             return new ContatoDTO(contatoRepository.save(entity.get()));
-        } catch (ObjectNotFoundException e){
-            throw new ObjectNotFoundException("Contato não encontrada");
+        } catch (NullPointerException e){
+            throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
         }
     }
 
@@ -59,6 +63,14 @@ public class ContatoService {
         entity.setCelular(contatoDTO.getCelular());
         entity.setTelefone(contatoDTO.getTelefone());
         entity.setPessoa(pessoaRepository.findByEmail(contatoDTO.getEmail()));
+    }
+
+    public void deletarContato(Long id){
+        try {
+            contatoRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
+        }
     }
 
 }
