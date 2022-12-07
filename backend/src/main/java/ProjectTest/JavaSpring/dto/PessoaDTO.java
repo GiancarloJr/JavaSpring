@@ -43,6 +43,7 @@ public class PessoaDTO {
         this.UF = UF;
         this.contatos = contatos;
     }
+
     public PessoaDTO(Pessoa entity) {
         this.id = entity.getId();
         this.name = entity.getName();
@@ -130,9 +131,5 @@ public class PessoaDTO {
 
     public List<Contato> getContatos() {
         return contatos;
-    }
-
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
     }
 }
