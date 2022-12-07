@@ -44,7 +44,7 @@ public class Pessoa {
         
     }
 
-    public Pessoa(Long id, String name, String CPF, String email, Long CEP, String logradouro, String complemento, String bairro, String UF, List<Contato> contatos) {
+    public Pessoa(Long id, String name, String CPF, String email, Long CEP, String logradouro, String complemento, String bairro, String UF) {
         this.id = id;
         this.name = name;
         this.CPF = CPF;
@@ -54,7 +54,9 @@ public class Pessoa {
         this.complemento = complemento;
         this.bairro = bairro;
         this.UF = UF;
-        this.contatos = contatos;
+    }
+
+    public Pessoa(Long id, String name, String name1, String cpf, String email, Long cep, String logradouro, String complemento, String bairro, String uf) {
     }
 
     public Long getId() {

@@ -29,7 +29,7 @@ public class Contato {
     private Pessoa pessoa;
 
     public Contato(){
-
+        
     }
 
     public Contato(Long id, String nome, Long telefone, Long celular, Pessoa pessoa) {
