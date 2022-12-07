@@ -38,17 +38,28 @@ public class PessoaService {
     }
 
     public PessoaDTO insert(PessoaDTO pessoaDTO) {
+            validacaoSalvarEmailouCPF(pessoaDTO);
             Pessoa entity = new Pessoa();
             convertDTOtoEntity(entity, pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity));
     }
 
     public PessoaDTO update(Long id,PessoaDTO pessoaDTO) {
+        validacaoAtualizarEmailouCPF(id,pessoaDTO);
         try {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             convertDTOtoEntity(entity.get(), pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity.get()));
         } catch (NoSuchElementException e){
+            throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
+        }
+    }
+
+    public void deletarPessoa(Long id){
+        try {
+            validacaoExclusaoPessoa(id);
+            pessoaRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
             throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
         }
     }
@@ -64,11 +75,24 @@ public class PessoaService {
         entity.setUF(pessoaDTO.getUF());
     }
 
-    public void deletarPessoa(Long id){
-        try {
-            pessoaRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
+    public void validacaoSalvarEmailouCPF(PessoaDTO pessoaDTO){
+        if(pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() || pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent()){
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
         }
     }
+
+    public void validacaoAtualizarEmailouCPF(Long id,PessoaDTO pessoaDTO){
+        if(pessoaRepository.findById(id).equals(pessoaRepository.findByEmail(pessoaDTO.getEmail())) ||
+                pessoaRepository.findById(id).equals(pessoaRepository.findByCPF(pessoaDTO.getCPF()))){
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+        }
+    }
+
+    public void validacaoExclusaoPessoa(Long id){
+        if(!pessoaRepository.findById(id).get().getContatos().isEmpty()){
+            throw new DataBaseException("PESSOA POSSUI CONTATOS VINCULADOS, APAGAR CONTATOS PRIMEIRO");
+        }
+    }
+
+
 }
