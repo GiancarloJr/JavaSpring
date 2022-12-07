@@ -17,23 +17,29 @@ public class PessoaResource {
     private PessoaService pessoaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaDTO> findById(@PathVariable Long id){
+    public ResponseEntity<PessoaDTO> buscarPessoaPorId(@PathVariable Long id){
         return ResponseEntity.ok().body(pessoaService.findByID(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PessoaDTO>> findAll(){
+    public ResponseEntity<List<PessoaDTO>> buscarTodasPessoas(){
         return ResponseEntity.ok().body(pessoaService.findAll());
     }
 
     @PostMapping("/")
-    public ResponseEntity<PessoaDTO> insert(@Valid @RequestBody PessoaDTO pessoaDTO){
+    public ResponseEntity<PessoaDTO> adicionarPessoa(@Valid @RequestBody PessoaDTO pessoaDTO){
             return ResponseEntity.ok().body(pessoaService.insert(pessoaDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<PessoaDTO> update(@PathVariable Long id,@Valid @RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable Long id,@Valid @RequestBody PessoaDTO pessoaDTO) {
         return ResponseEntity.ok().body(pessoaService.update(id,pessoaDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPessoa(@PathVariable("id") Long id) {
+        pessoaService.deletarPessoa(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

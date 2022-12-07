@@ -18,22 +18,28 @@ public class ContatoResource {
     private ContatoService contatoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContatoDTO> findById(@PathVariable Long id){
+    public ResponseEntity<ContatoDTO> buscarPorId(@PathVariable Long id){
         return ResponseEntity.ok().body(contatoService.findByID(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ContatoDTO>> findAll(){
+    public ResponseEntity<List<ContatoDTO>> buscarTodos(){
         return ResponseEntity.ok().body(contatoService.findAll());
     }
 
     @PostMapping("/")
-    public ResponseEntity<ContatoDTO> insert(@Valid @RequestBody ContatoDTO ContatoDTO){
+    public ResponseEntity<ContatoDTO> inserir(@Valid @RequestBody ContatoDTO ContatoDTO){
         return ResponseEntity.ok().body(contatoService.insert(ContatoDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ContatoDTO> update(@PathVariable Long id,@Valid @RequestBody ContatoDTO ContatoDTO) {
+    public ResponseEntity<ContatoDTO> atualizar(@PathVariable Long id,@Valid @RequestBody ContatoDTO ContatoDTO) {
         return ResponseEntity.ok().body(contatoService.update(id,ContatoDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+        contatoService.deletarContato(id);
+        return ResponseEntity.noContent().build();
     }
 }
