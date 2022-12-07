@@ -3,13 +3,23 @@ package ProjectTest.JavaSpring.dto;
 import ProjectTest.JavaSpring.entities.Contato;
 import ProjectTest.JavaSpring.entities.Pessoa;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class PessoaDTO {
 
+
+
     private Long id;
+    @NotBlank
+    @NotEmpty
     private String name;
+    @NotBlank
+    @NotEmpty
     private String CPF;
+    @NotBlank
+    @NotEmpty
     private String email;
     private Long CEP;
     private String logradouro;
@@ -19,7 +29,6 @@ public class PessoaDTO {
     private List<Contato> contatos;
 
     public PessoaDTO(){
-
     }
 
     public PessoaDTO(Long id, String name, String CPF, String email, Long CEP, String logradouro, String complemento, String bairro, String UF, List<Contato> contatos) {
