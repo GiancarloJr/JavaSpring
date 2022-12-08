@@ -18,23 +18,23 @@ public class ContatoResource {
     private ContatoService contatoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContatoDTO> buscarPorId(@PathVariable Long id){
-        return ResponseEntity.ok().body(contatoService.findByID(id));
+    public ResponseEntity<ContatoDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(contatoService.buscarPorId(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ContatoDTO>> buscarTodos(){
-        return ResponseEntity.ok().body(contatoService.findAll());
+    public ResponseEntity<List<ContatoDTO>> buscarTodos() {
+        return ResponseEntity.ok().body(contatoService.buscarTodos());
     }
 
     @PostMapping("/")
-    public ResponseEntity<ContatoDTO> inserir(@Valid @RequestBody ContatoDTO ContatoDTO){
-        return ResponseEntity.ok().body(contatoService.insert(ContatoDTO));
+    public ResponseEntity<ContatoDTO> inserir(@Valid @RequestBody ContatoDTO ContatoDTO) {
+        return ResponseEntity.ok().body(contatoService.salvarContato(ContatoDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ContatoDTO> atualizar(@PathVariable Long id,@Valid @RequestBody ContatoDTO ContatoDTO) {
-        return ResponseEntity.ok().body(contatoService.update(id,ContatoDTO));
+    public ResponseEntity<ContatoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody ContatoDTO ContatoDTO) {
+        return ResponseEntity.ok().body(contatoService.atualizarContato(id, ContatoDTO));
     }
 
     @DeleteMapping("/{id}")
