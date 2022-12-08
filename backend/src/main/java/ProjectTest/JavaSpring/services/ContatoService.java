@@ -2,8 +2,10 @@ package ProjectTest.JavaSpring.services;
 
 import ProjectTest.JavaSpring.dto.ContatoDTO;
 import ProjectTest.JavaSpring.entities.Contato;
+import ProjectTest.JavaSpring.entities.Pessoa;
 import ProjectTest.JavaSpring.repositories.ContatoRepository;
 import ProjectTest.JavaSpring.repositories.PessoaRepository;
+import ProjectTest.JavaSpring.services.exceptions.DataBaseException;
 import ProjectTest.JavaSpring.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,10 +39,11 @@ public class ContatoService {
         return list.stream().map(x -> new ContatoDTO(x)).collect(Collectors.toList());
     }
 
-    public ContatoDTO salvarContato(ContatoDTO ContatoDTO) {
+    public ContatoDTO salvarContato(ContatoDTO contatoDTO) {
+        validacaoPessoa(contatoDTO);
         try {
             Contato entity = new Contato();
-            convertDTOtoEntity(entity, ContatoDTO);
+            convertDTOtoEntity(entity, contatoDTO);
             entity.getPessoa().getContatos().clear();
             return new ContatoDTO(contatoRepository.save(entity));
         } catch (NullPointerException e) {
@@ -48,10 +51,11 @@ public class ContatoService {
         }
     }
 
-    public ContatoDTO atualizarContato(Long id, ContatoDTO ContatoDTO) {
+    public ContatoDTO atualizarContato(Long id, ContatoDTO contatoDTO) {
+        validacaoPessoa(contatoDTO);
         try {
             Optional<Contato> entity = contatoRepository.findById(id);
-            convertDTOtoEntity(entity.get(), ContatoDTO);
+            convertDTOtoEntity(entity.get(), contatoDTO);
             return new ContatoDTO(contatoRepository.save(entity.get()));
         } catch (NullPointerException e) {
             throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
@@ -71,6 +75,10 @@ public class ContatoService {
         } catch (EmptyResultDataAccessException e) {
             throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
         }
+    }
+
+    public void validacaoPessoa(ContatoDTO contatoDTO){
+        Pessoa pessoa = pessoaRepository.findByEmail(contatoDTO.getEmail().toLowerCase()).orElseThrow(()-> new DataBaseException("EMAIL NÃO CADASTRADO"));
     }
 
 }

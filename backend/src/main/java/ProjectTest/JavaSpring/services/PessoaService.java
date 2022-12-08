@@ -76,7 +76,7 @@ public class PessoaService {
         entity.setComplemento(pessoaDTO.getComplemento());
         entity.setCPF(pessoaDTO.getCPF());
         entity.setLogradouro(pessoaDTO.getLogradouro());
-        entity.setEmail(pessoaDTO.getEmail());
+        entity.setEmail(pessoaDTO.getEmail().toLowerCase());
         entity.setUF(pessoaDTO.getUF());
     }
 
