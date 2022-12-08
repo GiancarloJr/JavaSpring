@@ -15,6 +15,7 @@ public class StandardError {
         this.message = message;
         this.path = path;
     }
+
     public StandardError() {
     }
 

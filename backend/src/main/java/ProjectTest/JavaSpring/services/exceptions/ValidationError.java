@@ -3,7 +3,7 @@ package ProjectTest.JavaSpring.services.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationError extends StandardError{
+public class ValidationError extends StandardError {
 
     private List<FieldMessage> erros = new ArrayList<>();
 
@@ -11,8 +11,8 @@ public class ValidationError extends StandardError{
         return erros;
     }
 
-    public void addError(String fieldName, String message){
-            erros.add(new FieldMessage(fieldName,message));
+    public void addError(String fieldName, String message) {
+        erros.add(new FieldMessage(fieldName, message));
     }
 
 }
