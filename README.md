@@ -1,5 +1,5 @@
 # JavaSpring
-Projeto API para vaga de Desenvolvedor Backend Java
+Projeto API Java
 
 Java com Spring Boot 2.7.6
 
