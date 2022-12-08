@@ -1,6 +1,9 @@
 # JavaSpring
 ProjectForTest
 
+Link Swagger: http://localhost:8080/swagger-ui.html
+
+
 1. O teste de API consiste em criar um CRUD das entidades abaixo:
 Entidade Pessoa
 - Id *
@@ -13,6 +16,7 @@ Entidade Pessoa
 - Bairro
 - UF
 - Lista<Contato> contatos
+
 Entidade Contato
 - Pessoa *
 - Nome *
