@@ -1,8 +1,18 @@
 # JavaSpring
-ProjectForTest
+Projeto API para vaga de Desenvolvedor Backend Java
+
+Java com Spring Boot 2.7.6
 
 Link Swagger: http://localhost:8080/swagger-ui.html
 
+Banco de dados principal: h2 database
+Banco de dados opcional: PostGress (Script no importsql ou configurar migration com flyway)
+
+Validação de campos obrigatórios.
+Metodo para Validação de CPF e Email.
+
+Testes de Estrutura de Entidades
+Testes dos metodos findById, DeleteById e Exceptions
 
 1. O teste de API consiste em criar um CRUD das entidades abaixo:
 Entidade Pessoa
