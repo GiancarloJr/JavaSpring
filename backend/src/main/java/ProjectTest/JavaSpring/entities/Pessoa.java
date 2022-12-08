@@ -1,6 +1,7 @@
 package ProjectTest.JavaSpring.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,12 +37,12 @@ public class Pessoa {
 
     @Column(name = "PES_UF")
     private String UF;
-    
+
     @OneToMany(mappedBy = "pessoa")
     private List<Contato> contatos;
-    
-    public Pessoa(){
-        
+
+    public Pessoa() {
+
     }
 
     public Pessoa(Long id, String name, String CPF, String email, Long CEP, String logradouro, String complemento, String bairro, String UF) {

@@ -28,7 +28,7 @@ public class Contato {
     @JoinColumn(name = "pessoa_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
 
-    public Contato(){
+    public Contato() {
 
     }
 
@@ -39,6 +39,14 @@ public class Contato {
         this.celular = celular;
         this.pessoa = pessoa;
     }
+
+    public Contato(Long id, String nome, Long telefone, Long celular) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.celular = celular;
+    }
+
 
     public Long getId() {
         return id;
