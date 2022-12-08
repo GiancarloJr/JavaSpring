@@ -22,7 +22,7 @@ public class ContatoDTO {
     @Email(message = "Email de usuario para adicionar contato obrigatório")
     private String emailPessoa;
 
-    public ContatoDTO(){
+    public ContatoDTO() {
 
     }
 
