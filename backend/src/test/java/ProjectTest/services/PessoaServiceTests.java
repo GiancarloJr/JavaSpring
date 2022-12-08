@@ -56,7 +56,7 @@ public class PessoaServiceTests {
     @Test
     public void buscarPorIdRetornaObjectoDTO() {
 
-        PessoaDTO pessoaDTO = pessoaService.findByID(existenteId);
+        PessoaDTO pessoaDTO = pessoaService.buscarPessoaPorID(existenteId);
 
         Assertions.assertNotNull(pessoaDTO);
 
@@ -83,7 +83,7 @@ public class PessoaServiceTests {
     @Test
     public void findByIdReturnDTOWhenIdExists() {
 
-        PessoaDTO productDTO = pessoaService.findByID(existenteId);
+        PessoaDTO productDTO = pessoaService.buscarPessoaPorID(existenteId);
 
         Assertions.assertEquals(productDTO.getId(), existenteId);
     }
@@ -93,7 +93,7 @@ public class PessoaServiceTests {
     public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {
 
         Assertions.assertThrows(ObjectNotFoundException.class, () -> {
-            pessoaService.findByID(inexistenteId);
+            pessoaService.buscarPessoaPorID(inexistenteId);
         });
     }
 
