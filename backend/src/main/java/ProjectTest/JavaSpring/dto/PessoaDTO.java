@@ -9,7 +9,6 @@ import java.util.List;
 public class PessoaDTO {
 
 
-
     private Long id;
     @NotBlank(message = "Não pode estar em branco")
     @NotEmpty(message = "Não pode estar vazio")
@@ -29,7 +28,7 @@ public class PessoaDTO {
     private String UF;
     private List<Contato> contatos;
 
-    public PessoaDTO(){
+    public PessoaDTO() {
     }
 
     public PessoaDTO(Long id, String name, String CPF, String email, Long CEP, String logradouro, String complemento, String bairro, String UF, List<Contato> contatos) {
@@ -56,6 +55,19 @@ public class PessoaDTO {
         this.bairro = entity.getBairro();
         this.UF = entity.getUF();
         this.contatos = entity.getContatos();
+    }
+
+    public PessoaDTO(Pessoa entity, List<Contato> contatos) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.CPF = entity.getCPF();
+        this.email = entity.getEmail();
+        this.CEP = entity.getCEP();
+        this.logradouro = entity.getLogradouro();
+        this.complemento = entity.getComplemento();
+        this.bairro = entity.getBairro();
+        this.UF = entity.getUF();
+        this.contatos = contatos;
     }
 
     public Long getId() {
