@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "baf663bf-66f8-464e-ae7b-7b0c89b8180b",
+		"name": "API Estágio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21708394"
+	},
+	"item": [
+		{
+			"name": "Pessoas",
+			"item": [
+				{
+					"name": "Buscar Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pessoas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Todas Pessoas Sem Mostrar Contatos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pessoas/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Todas Pessoas Mostrar Contatos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pessoas/allcompleto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								"allcompleto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Pessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mariana Helena\",\r\n    \"email\": \"Mariana@hotmail.com\",\r\n    \"logradouro\": \"Rua Goiania\",\r\n    \"complemento\": \"Sem complemento\",\r\n    \"bairro\": \"Riviera\",\r\n    \"cpf\": \"15827288877\",\r\n    \"cep\": 759097196,\r\n    \"uf\": \"GO\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pessoas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Pessoa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Giancarlo Sena qweunior\",\r\n    \"email\": \"giancarlo@hotmail.com\",\r\n    \"logradouro\": \"Rua das Teste\",\r\n    \"complemento\": \"Em frente a praça\",\r\n    \"bairro\": \"Hoje\",\r\n    \"cpf\": \"15827288877\",\r\n    \"cep\": 759097196,\r\n    \"uf\": \"G123O\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pessoas/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePessoa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Giancarlo Sena Martins Junior\",\r\n    \"email\": \"giancarla123@hotmail.com\",\r\n    \"logradouro\": \"Rua das asda12qweqwe3casas\",\r\n    \"complemento\": \"Em frenteqweqwe a praça\",\r\n    \"bairro\": \"Hoje\",\r\n    \"cpf\": \"1582722222\",\r\n    \"cep\": 759097196,\r\n    \"uf\": \"G123O\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pessoas/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pessoas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contatos",
+			"item": [
+				{
+					"name": "Buscar Por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/contatos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Todos Contatos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/contatos/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Contato a Pessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Maria3\",\r\n    \"telefone\": 123456781,\r\n    \"celular\": 123456,\r\n    \"email\": \"giancarlo@hotmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/contatos/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Contato",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Maria\",\r\n    \"telefone\": 12345678,\r\n    \"celular\": 12345678,\r\n    \"email\": \"giancarlo@hotmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/contatos/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Contato",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/contatos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
