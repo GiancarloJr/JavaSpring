@@ -17,23 +17,28 @@ public class PessoaResource {
     private PessoaService pessoaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaDTO> buscarPessoaPorId(@PathVariable Long id){
-        return ResponseEntity.ok().body(pessoaService.findByID(id));
+    public ResponseEntity<PessoaDTO> buscarPessoaPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(pessoaService.buscarPessoaPorID(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PessoaDTO>> buscarTodasPessoas(){
-        return ResponseEntity.ok().body(pessoaService.findAll());
+    public ResponseEntity<List<PessoaDTO>> buscarTodasPessoasSemMostrarContatos() {
+        return ResponseEntity.ok().body(pessoaService.buscarPessoasSemMostrarContatos());
+    }
+
+    @GetMapping("/allcompleto")
+    public ResponseEntity<List<PessoaDTO>> buscarTodasPessoasMostrarContatos() {
+        return ResponseEntity.ok().body(pessoaService.buscarPessoasMostrarContatos());
     }
 
     @PostMapping("/")
-    public ResponseEntity<PessoaDTO> adicionarPessoa(@Valid @RequestBody PessoaDTO pessoaDTO){
-            return ResponseEntity.ok().body(pessoaService.insert(pessoaDTO));
+    public ResponseEntity<PessoaDTO> adicionarPessoa(@Valid @RequestBody PessoaDTO pessoaDTO) {
+        return ResponseEntity.ok().body(pessoaService.salvarPessoa(pessoaDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable Long id,@Valid @RequestBody PessoaDTO pessoaDTO) {
-        return ResponseEntity.ok().body(pessoaService.update(id,pessoaDTO));
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
+        return ResponseEntity.ok().body(pessoaService.atualizarPessoa(id, pessoaDTO));
     }
 
     @DeleteMapping("/{id}")

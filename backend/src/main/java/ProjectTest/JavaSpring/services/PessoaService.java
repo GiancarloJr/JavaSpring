@@ -20,42 +20,47 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public PessoaDTO findByID(Long id){
+    public PessoaDTO buscarPessoaPorID(Long id) {
         try {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             return new PessoaDTO(entity.get());
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
         }
     }
 
-    public List<PessoaDTO> findAll() {
+    public List<PessoaDTO> buscarPessoasSemMostrarContatos() {
         List<Pessoa> list = pessoaRepository.findAll();
-        for(Pessoa pessoa: list){
+        for (Pessoa pessoa : list) {
             pessoa.getContatos().clear();
         }
         return list.stream().map(x -> new PessoaDTO(x)).collect(Collectors.toList());
     }
 
-    public PessoaDTO insert(PessoaDTO pessoaDTO) {
-            validacaoSalvarEmailouCPF(pessoaDTO);
-            Pessoa entity = new Pessoa();
-            convertDTOtoEntity(entity, pessoaDTO);
-            return new PessoaDTO(pessoaRepository.save(entity));
+    public List<PessoaDTO> buscarPessoasMostrarContatos() {
+        List<Pessoa> list = pessoaRepository.findAll();
+        return list.stream().map(x -> new PessoaDTO(x)).collect(Collectors.toList());
     }
 
-    public PessoaDTO update(Long id,PessoaDTO pessoaDTO) {
+    public PessoaDTO salvarPessoa(PessoaDTO pessoaDTO) {
+        validacaoSalvarEmailouCPF(pessoaDTO);
+        Pessoa entity = new Pessoa();
+        convertDTOtoEntity(entity, pessoaDTO);
+        return new PessoaDTO(pessoaRepository.save(entity));
+    }
+
+    public PessoaDTO atualizarPessoa(Long id, PessoaDTO pessoaDTO) {
         validacaoAtualizarEmailouCPF(id,pessoaDTO);
         try {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             convertDTOtoEntity(entity.get(), pessoaDTO);
             return new PessoaDTO(pessoaRepository.save(entity.get()));
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new ObjectNotFoundException("USUARIO NÃO ENCONTRADO");
         }
     }
 
-    public void deletarPessoa(Long id){
+    public void deletarPessoa(Long id) {
         try {
             validacaoExclusaoPessoa(id);
             pessoaRepository.deleteById(id);
@@ -64,7 +69,7 @@ public class PessoaService {
         }
     }
 
-    public void convertDTOtoEntity(Pessoa entity,PessoaDTO pessoaDTO){
+    public void convertDTOtoEntity(Pessoa entity, PessoaDTO pessoaDTO) {
         entity.setName(pessoaDTO.getName());
         entity.setBairro(pessoaDTO.getBairro());
         entity.setCEP(pessoaDTO.getCEP());
@@ -75,24 +80,39 @@ public class PessoaService {
         entity.setUF(pessoaDTO.getUF());
     }
 
-    public void validacaoSalvarEmailouCPF(PessoaDTO pessoaDTO){
-        if(pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() || pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent()){
-            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-        }
-    }
-
-    public void validacaoAtualizarEmailouCPF(Long id,PessoaDTO pessoaDTO){
-        if(pessoaRepository.findById(id).equals(pessoaRepository.findByEmail(pessoaDTO.getEmail())) ||
-                pessoaRepository.findById(id).equals(pessoaRepository.findByCPF(pessoaDTO.getCPF()))){
-            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-        }
-    }
-
-    public void validacaoExclusaoPessoa(Long id){
-        if(!pessoaRepository.findById(id).get().getContatos().isEmpty()){
+    public void validacaoExclusaoPessoa(Long id) {
+        if (!pessoaRepository.findById(id).get().getContatos().isEmpty()) {
             throw new DataBaseException("PESSOA POSSUI CONTATOS VINCULADOS, APAGAR CONTATOS PRIMEIRO");
         }
     }
 
+    public void validacaoSalvarEmailouCPF(PessoaDTO pessoaDTO) {
+        List<Pessoa> pessoaList = pessoaRepository.findAll();
+        for(Pessoa pessoa: pessoaList){
+            if(pessoaDTO.getEmail().toLowerCase().equals(pessoa.getEmail().toLowerCase())){
+                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+            }
+        }
+        for(Pessoa pessoa: pessoaList){
+            if(pessoaDTO.getCPF().equals(pessoa.getCPF())){
+                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+            }
+        }
+    }
+
+    public void validacaoAtualizarEmailouCPF(Long id, PessoaDTO pessoaDTO) {
+        List<Pessoa> pessoaList = pessoaRepository.findAll();
+        pessoaList.remove(id);
+        for(Pessoa pessoa: pessoaList) {
+            if (pessoa.getEmail().toLowerCase().equals(pessoaDTO.getEmail().toLowerCase()) && pessoa.getId().longValue() != id.longValue()) {
+                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+            }
+        }
+        for(Pessoa pessoa: pessoaList) {
+            if (pessoa.getCPF().equals(pessoaDTO.getCPF()) && pessoa.getId().longValue() != id.longValue()) {
+                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+            }
+        }
+    }
 
 }
