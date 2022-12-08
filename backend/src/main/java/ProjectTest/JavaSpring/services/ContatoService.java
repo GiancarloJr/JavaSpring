@@ -16,28 +16,28 @@ import java.util.stream.Collectors;
 
 @Service
 public class ContatoService {
-    
+
     @Autowired
     private ContatoRepository contatoRepository;
 
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public ContatoDTO findByID(Long id){
+    public ContatoDTO buscarPorId(Long id) {
         try {
             Optional<Contato> entity = contatoRepository.findById(id);
             return new ContatoDTO(entity.get());
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
         }
     }
 
-    public List<ContatoDTO> findAll() {
+    public List<ContatoDTO> buscarTodos() {
         List<Contato> list = contatoRepository.findAll();
         return list.stream().map(x -> new ContatoDTO(x)).collect(Collectors.toList());
     }
 
-    public ContatoDTO insert(ContatoDTO ContatoDTO) {
+    public ContatoDTO salvarContato(ContatoDTO ContatoDTO) {
         try {
             Contato entity = new Contato();
             convertDTOtoEntity(entity, ContatoDTO);
@@ -48,24 +48,24 @@ public class ContatoService {
         }
     }
 
-    public ContatoDTO update(Long id,ContatoDTO ContatoDTO) {
+    public ContatoDTO atualizarContato(Long id, ContatoDTO ContatoDTO) {
         try {
             Optional<Contato> entity = contatoRepository.findById(id);
             convertDTOtoEntity(entity.get(), ContatoDTO);
             return new ContatoDTO(contatoRepository.save(entity.get()));
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new ObjectNotFoundException("CONTATO NAO ENCONTRADO");
         }
     }
 
-    public void convertDTOtoEntity(Contato entity,ContatoDTO contatoDTO){
+    public void convertDTOtoEntity(Contato entity, ContatoDTO contatoDTO) {
         entity.setNome(contatoDTO.getNome());
         entity.setCelular(contatoDTO.getCelular());
         entity.setTelefone(contatoDTO.getTelefone());
-        entity.setPessoa(pessoaRepository.findByEmail(contatoDTO.getEmail()));
+        entity.setPessoa(pessoaRepository.findByEmail(contatoDTO.getEmail()).get());
     }
 
-    public void deletarContato(Long id){
+    public void deletarContato(Long id) {
         try {
             contatoRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
