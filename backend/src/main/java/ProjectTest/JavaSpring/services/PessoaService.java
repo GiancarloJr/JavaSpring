@@ -50,7 +50,7 @@ public class PessoaService {
     }
 
     public PessoaDTO atualizarPessoa(Long id, PessoaDTO pessoaDTO) {
-        validacaoAtualizarEmailouCPF(id,pessoaDTO);
+        validacaoAtualizarEmailouCPF(id, pessoaDTO);
         try {
             Optional<Pessoa> entity = pessoaRepository.findById(id);
             convertDTOtoEntity(entity.get(), pessoaDTO);
@@ -87,19 +87,19 @@ public class PessoaService {
     }
 
     public void validacaoSalvarEmailouCPF(PessoaDTO pessoaDTO) {
-        if (pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() || pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent() ) {
-            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-        }
-    }
-    public void validacaoAtualizarEmailouCPF(Long id, PessoaDTO pessoaDTO) {
-        if(pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() &&
-                id.longValue() != pessoaRepository.findByEmail(pessoaDTO.getEmail()).get().getId().longValue()){
-            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-        }
-        if(pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent() &&
-                id.longValue() != pessoaRepository.findByCPF(pessoaDTO.getCPF()).get().getId().longValue()){
+        if (pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() || pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent()) {
             throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
         }
     }
 
+    public void validacaoAtualizarEmailouCPF(Long id, PessoaDTO pessoaDTO) {
+        if (pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() &&
+                id.longValue() != pessoaRepository.findByEmail(pessoaDTO.getEmail()).get().getId().longValue()) {
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+        }
+        if (pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent() &&
+                id.longValue() != pessoaRepository.findByCPF(pessoaDTO.getCPF()).get().getId().longValue()) {
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
+        }
+    }
 }
