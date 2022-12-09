@@ -87,31 +87,18 @@ public class PessoaService {
     }
 
     public void validacaoSalvarEmailouCPF(PessoaDTO pessoaDTO) {
-        List<Pessoa> pessoaList = pessoaRepository.findAll();
-        for(Pessoa pessoa: pessoaList){
-            if(pessoaDTO.getEmail().toLowerCase().equals(pessoa.getEmail().toLowerCase())){
-                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-            }
-        }
-        for(Pessoa pessoa: pessoaList){
-            if(pessoaDTO.getCPF().equals(pessoa.getCPF())){
-                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-            }
+        if (pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() || pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent() ) {
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
         }
     }
-
     public void validacaoAtualizarEmailouCPF(Long id, PessoaDTO pessoaDTO) {
-        List<Pessoa> pessoaList = pessoaRepository.findAll();
-        pessoaList.remove(id);
-        for(Pessoa pessoa: pessoaList) {
-            if (pessoa.getEmail().toLowerCase().equals(pessoaDTO.getEmail().toLowerCase()) && pessoa.getId().longValue() != id.longValue()) {
-                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-            }
+        if(pessoaRepository.findByEmail(pessoaDTO.getEmail()).isPresent() &&
+                id.longValue() != pessoaRepository.findByEmail(pessoaDTO.getEmail()).get().getId().longValue()){
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
         }
-        for(Pessoa pessoa: pessoaList) {
-            if (pessoa.getCPF().equals(pessoaDTO.getCPF()) && pessoa.getId().longValue() != id.longValue()) {
-                throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
-            }
+        if(pessoaRepository.findByCPF(pessoaDTO.getCPF()).isPresent() &&
+                id.longValue() != pessoaRepository.findByCPF(pessoaDTO.getCPF()).get().getId().longValue()){
+            throw new DataBaseException("EMAIL OU CPF JA CADASTRADO!");
         }
     }
 
