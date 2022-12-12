@@ -25,7 +25,7 @@ public class Contato {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "pes_id")
+    @JoinColumn(name = "PESSOA_ID", referencedColumnName = "PES_ID")
     private Pessoa pessoa;
 
     public Contato() {
