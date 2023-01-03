@@ -1,7 +1,6 @@
 package ProjectTest.JavaSpring.resources;
 
 import ProjectTest.JavaSpring.dto.ContatoDTO;
-import ProjectTest.JavaSpring.dto.ContatoDTO;
 import ProjectTest.JavaSpring.services.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
